@@ -6,11 +6,11 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: 'class',
+  darkMode: 'class', // allow toggling
   theme: {
     extend: {
       colors: {
-        // Add any custom colors here
+        // optional: custom brand colors if needed
       },
     },
   },
@@ -18,55 +18,35 @@ export default {
   daisyui: {
     themes: [
       {
-        light: {
+        modernlight: {
           ...require("daisyui/src/theming/themes")["light"],
-          primary: "#3b82f6",
-          secondary: "#64748b",
-          accent: "#f43f5e",
+          "primary": "#2563eb",   // rich blue
+          "secondary": "#6b7280", // neutral gray
+          "accent": "#f97316",    // modern orange
+          "neutral": "#f3f4f6",   // clean gray backgrounds
+          "base-100": "#ffffff",  // white base
+          "info": "#0ea5e9",
+          "success": "#22c55e",
+          "warning": "#facc15",
+          "error": "#ef4444",
         },
       },
       {
-        dark: {
+        moderndark: {
           ...require("daisyui/src/theming/themes")["dark"],
-          primary: "#3b82f6",
-          secondary: "#94a3b8",
-          accent: "#f43f5e",
+          "primary": "#60a5fa",
+          "secondary": "#94a3b8",
+          "accent": "#f97316",
+          "neutral": "#1e293b",
+          "base-100": "#0f172a",
+          "info": "#38bdf8",
+          "success": "#4ade80",
+          "warning": "#facc15",
+          "error": "#f87171",
         },
       },
-      "light",
-      "dark",
-      "cupcake",
-      "bumblebee",
-      "emerald",
-      "corporate",
-      "synthwave",
-      "retro",
-      "cyberpunk",
-      "valentine",
-      "halloween",
-      "garden",
-      "forest",
-      "aqua",
-      "lofi",
-      "pastel",
-      "fantasy",
-      "wireframe",
-      "black",
-      "luxury",
-      "dracula",
-      "cmyk",
-      "autumn",
-      "business",
-      "acid",
-      "lemonade",
-      "night",
-      "coffee",
-      "winter",
-      "dim",
-      "nord",
-      "sunset",
     ],
-    darkTheme: "dark",
+    darkTheme: "moderndark",
     base: true,
     styled: true,
     utils: true,

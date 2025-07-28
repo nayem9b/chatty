@@ -1,26 +1,67 @@
 @import "tailwindcss";
 
+/* Light mode variables – clean, minimal */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #ffffff;         /* pure white canvas */
+  --foreground: #0f0f0f;         /* rich black text */
+
+  --card: #fafafa;               /* soft off-white panels */
+  --card-border: #eaeaea;        /* very light border */
+
+  --accent: #2563eb;             /* vivid blue accent */
+  --accent-foreground: #ffffff;
+
+  --radius: 0.75rem;
 }
 
+/* Dark mode – charcoal with vivid blue */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #121212;       /* true dark, not bluish */
+    --foreground: #f5f5f5;       /* soft white text */
+
+    --card: #1a1a1a;             /* slightly lighter panels */
+    --card-border: #2a2a2a;
+
+    --accent: #3b82f6;           /* electric blue */
+    --accent-foreground: #ffffff;
+  }
+}
+
+/* Map CSS variables into Tailwind's design system */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-accent: var(--accent);
+  --color-card: var(--card);
+  --color-card-border: var(--card-border);
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Base document styling */
+html,
+body {
+  height: 100%;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Card utility */
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  padding: 1rem;
 }
