@@ -8,6 +8,7 @@ import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { Cover } from "@/components/ui/cover";
 import { MaskContainer } from "@/components/ui/svg-mask-effect";
 import { TracingBeam } from "@/components/ui/tracing-beam";
+import Footer from "@/components/ui/footer";
 
 const Index = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -19,7 +20,7 @@ const Index = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const triggerPoint = window.innerHeight * 0.7; // adjust as needed
+      const triggerPoint = window.innerHeight * 0.7;
       if (window.scrollY > triggerPoint) {
         setScrolled(true);
       } else {
@@ -32,20 +33,20 @@ const Index = () => {
   }, []);
 
   return (
-    <TracingBeam className="px-6">
-      <div
-        className={`min-h-screen overflow-hidden transition-colors duration-1000 ${
-          scrolled
-            ? "bg-gradient-to-br from-indigo-900 via-purple-900 to-black"
-            : "bg-background"
-        }`}
-      >
+    <div className="w-full">
+      <TracingBeam className="w-full max-w-none">
+        <div
+          className={`min-h-screen w-full overflow-hidden transition-colors duration-1000 ${
+            scrolled
+              ? "bg-gradient-to-br from-indigo-900 via-purple-900 to-black"
+              : "bg-background"
+          }`}
+        >
         {/* Hero Section */}
-        <section className="relative min-h-screen flex items-center justify-center px-6">
+        <section className="relative w-full min-h-screen flex items-center justify-center">
           {/* Background Image */}
           <div className="absolute inset-0 z-0">
             <img
-              // src={chatHeroImage}
               alt="Chat Hero"
               className="w-full h-full object-cover opacity-20"
             />
@@ -63,7 +64,7 @@ const Index = () => {
             style={{ animationDelay: "2s" }}
           />
 
-          <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+          <div className="relative z-10 w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center px-4 sm:px-6 lg:px-8">
             {/* Left Side - Content */}
             <div
               className={`space-y-8 transition-all duration-1000 ${
@@ -73,10 +74,10 @@ const Index = () => {
               }`}
             >
               <div className="space-y-6">
-                <h1 className="text-5xl lg:text-7xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent leading-tight">
+                <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent leading-tight">
                   Chat Like Never Before
                 </h1>
-                <p className="text-xl text-muted-foreground leading-relaxed max-w-lg">
+                <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-lg">
                   Experience the future of communication with our ultra-modern
                   chat platform. Connect, share, and collaborate with stunning
                   animations and seamless design.
@@ -131,10 +132,10 @@ const Index = () => {
         </section>
 
         {/* Features Section */}
-        <section className="py-20 px-6 relative">
-          <div className="max-w-7xl mx-auto">
+        <section className="py-20 relative w-full">
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-gradient-primary">
+              <h2 className="text-4xl sm:text-5xl font-bold mb-6 text-gradient-primary">
                 Why Choose Our Platform?
               </h2>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -143,7 +144,7 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
               <FeatureCard
                 icon="🚀"
                 title="Lightning Fast"
@@ -182,12 +183,12 @@ const Index = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 px-6 relative">
-          <div className="max-w-4xl mx-auto text-center">
+        <section className="py-20 relative w-full">
+          <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="bg-gradient-primary rounded-3xl p-12 relative overflow-hidden">
               <div className="absolute inset-0 bg-pattern opacity-20" />
               <div className="relative z-10">
-                <h2 className="text-4xl lg:text-5xl font-bold text-primary-foreground mb-6">
+                <h2 className="text-4xl sm:text-5xl font-bold text-primary-foreground mb-6">
                   Ready to Transform Your Communication?
                 </h2>
                 <p className="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
@@ -215,7 +216,7 @@ const Index = () => {
           </div>
         </section>
 
-        <div className="mx-auto my-10 max-w-7xl rounded-3xl bg-gray-950/5 p-2 ring-1 ring-neutral-700/10 dark:bg-neutral-800">
+        <div className="mx-auto my-10 max-w-7xl rounded-3xl bg-gray-950/5 p-2 ring-1 ring-neutral-700/10 dark:bg-neutral-800 w-full px-4 sm:px-6 lg:px-8">
           <ThreeDMarquee
             images={[
               "https://assets.aceternity.com/cloudinary_bkp/3d-card.png",
@@ -259,7 +260,7 @@ const Index = () => {
           <p>Your content goes here</p>
         </ContainerScroll>
 
-        <h1 className="text-4xl md:text-4xl lg:text-6xl font-semibold max-w-7xl mx-auto text-center mt-6 relative z-20 py-6 bg-clip-text text-transparent bg-gradient-to-b from-neutral-800 via-neutral-700 to-neutral-700 dark:from-neutral-800 dark:via-white dark:to-white">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold max-w-7xl mx-auto text-center mt-6 relative z-20 py-6 bg-clip-text text-transparent bg-gradient-to-b from-neutral-800 via-neutral-700 to-neutral-700 dark:from-neutral-800 dark:via-white dark:to-white">
           Build amazing websites <br /> at <Cover>warp speed</Cover>
         </h1>
 
@@ -279,8 +280,10 @@ const Index = () => {
             <span className="text-blue-500">advanced animations</span>.
           </MaskContainer>
         </div>
-      </div>
-    </TracingBeam>
+        </div>
+      </TracingBeam>
+      <Footer />
+    </div>
   );
 };
 

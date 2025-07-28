@@ -11,7 +11,7 @@ const ThemeProviderWrapper = dynamic<{ children: ReactNode }>(
   { 
     ssr: false,
     loading: () => (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex mx-auto items-center justify-center">
         <div className="loading loading-spinner loading-lg"></div>
       </div>
     )
@@ -45,7 +45,7 @@ export default function RootLayout({
         <ThemeInitializer>
           <ThemeProviderWrapper>
           <Navbar/>
-            <main className="flex-1 container mx-auto px-4 py-6">
+            <main className="flex-1 container w-full">
               {children}
             </main>
           </ThemeProviderWrapper>
