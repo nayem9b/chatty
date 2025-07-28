@@ -9,6 +9,7 @@ import { Cover } from "@/components/ui/cover";
 import { MaskContainer } from "@/components/ui/svg-mask-effect";
 import { TracingBeam } from "@/components/ui/tracing-beam";
 import Footer from "@/components/ui/footer";
+import { ChatAnimation } from "@/components/ui/ChatAnimation";
 
 const Index = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -33,10 +34,10 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="w-full overflow-x-hidden">
       <TracingBeam className="w-full max-w-none">
         <div
-          className={`min-h-screen w-full overflow-hidden transition-colors duration-1000 ${
+          className={`min-h-screen w-full transition-colors duration-1000 ${
             scrolled
               ? "bg-gradient-to-br from-indigo-900 via-purple-900 to-black"
               : "bg-background"
@@ -126,7 +127,7 @@ const Index = () => {
                   : "opacity-0 translate-x-10"
               }`}
             >
-              {/* <ChatAnimation /> */}
+              <ChatAnimation />
             </div>
           </div>
         </section>
@@ -216,7 +217,7 @@ const Index = () => {
           </div>
         </section>
 
-        <div className="mx-auto my-10 max-w-7xl rounded-3xl bg-gray-950/5 p-2 ring-1 ring-neutral-700/10 dark:bg-neutral-800 w-full px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto my-10 max-w-7xl rounded-3xl bg-gray-950/5 p-2 ring-1 ring-neutral-700/10 dark:bg-neutral-800 w-[calc(100%-2rem)] px-4 sm:px-6 lg:px-8">
           <ThreeDMarquee
             images={[
               "https://assets.aceternity.com/cloudinary_bkp/3d-card.png",
