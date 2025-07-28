@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { cn } from "../lib/utils";
+
 export const ThreeDMarquee = ({
   images,
   className,
@@ -9,20 +11,39 @@ export const ThreeDMarquee = ({
   images: string[];
   className?: string;
 }) => {
-  // Split the images array into 4 equal parts
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const trigger = window.innerHeight * 0.5;
+      const section = document.getElementById("three-d-marquee-section");
+      if (section) {
+        const rect = section.getBoundingClientRect();
+        setScrolled(rect.top < trigger);
+      }
+    };
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const chunkSize = Math.ceil(images.length / 4);
   const chunks = Array.from({ length: 4 }, (_, colIndex) => {
     const start = colIndex * chunkSize;
     return images.slice(start, start + chunkSize);
   });
+
   return (
     <div
+      id="three-d-marquee-section"
       className={cn(
-        "relative mx-auto block h-[600px] overflow-hidden rounded-2xl max-sm:h-100",
+        "relative mx-auto block h-[600px] overflow-hidden rounded-2xl transition-colors duration-1000",
+        scrolled
+          ? "bg-gradient-to-br from-blue-900/60 to-purple-900/60"
+          : "bg-black/70",
         className,
       )}
     >
-      {/* Overlayed Text & Buttons */}
+      {/* Overlay text */}
       <div className="absolute inset-0 z-20 flex flex-col items-center justify-center px-4 text-center">
         <h2 className="max-w-4xl text-3xl font-bold text-white md:text-5xl lg:text-6xl">
           This is your life and it&apos;s ending one{" "}
@@ -36,7 +57,7 @@ export const ThreeDMarquee = ({
           bank. You are not the car you drive. You&apos;re not the contents of
           your wallet.
         </p>
-  
+
         <div className="mt-6 flex gap-4">
           <button className="rounded-md bg-sky-600 px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-sky-700 focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-black focus:outline-none">
             Join the club
@@ -46,7 +67,7 @@ export const ThreeDMarquee = ({
           </button>
         </div>
       </div>
-  
+
       {/* 3D Grid */}
       <div className="flex size-full items-center justify-center">
         <div className="size-[1720px] shrink-0 scale-50 sm:scale-75 lg:scale-100">
@@ -64,7 +85,7 @@ export const ThreeDMarquee = ({
                   repeat: Infinity,
                   repeatType: "reverse",
                 }}
-                key={colIndex + 'marquee'}
+                key={colIndex + "marquee"}
                 className="flex flex-col items-start gap-8"
               >
                 <GridLineVertical className="-left-4" offset="80px" />
@@ -72,14 +93,8 @@ export const ThreeDMarquee = ({
                   <div className="relative" key={imageIndex + image}>
                     <GridLineHorizontal className="-top-4" offset="20px" />
                     <motion.img
-                      whileHover={{
-                        y: -10,
-                      }}
-                      transition={{
-                        duration: 0.3,
-                        ease: "easeInOut",
-                      }}
-                      key={imageIndex + image}
+                      whileHover={{ y: -10 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
                       src={image}
                       alt={`Image ${imageIndex + 1}`}
                       className="aspect-[970/700] rounded-lg object-cover ring ring-gray-950/5 hover:shadow-2xl"
@@ -93,48 +108,45 @@ export const ThreeDMarquee = ({
           </div>
         </div>
       </div>
-  
-      {/* optional overlay dark tint */}
+
       <div className="absolute inset-0 z-10 bg-black/60" />
     </div>
   );
-  
 };
 
+// Helper components need to be re-added here:
 const GridLineHorizontal = ({
   className,
   offset,
 }: {
   className?: string;
   offset?: string;
-}) => {
-  return (
-    <div
-      style={
-        {
-          "--background": "#ffffff",
-          "--color": "rgba(0, 0, 0, 0.2)",
-          "--height": "1px",
-          "--width": "5px",
-          "--fade-stop": "90%",
-          "--offset": offset || "200px", //-100px if you want to keep the line inside
-          "--color-dark": "rgba(255, 255, 255, 0.2)",
-          maskComposite: "exclude",
-        } as React.CSSProperties
-      }
-      className={cn(
-        "absolute left-[calc(var(--offset)/2*-1)] h-[var(--height)] w-[calc(100%+var(--offset))]",
-        "bg-[linear-gradient(to_right,var(--color),var(--color)_50%,transparent_0,transparent)]",
-        "[background-size:var(--width)_var(--height)]",
-        "[mask:linear-gradient(to_left,var(--background)_var(--fade-stop),transparent),_linear-gradient(to_right,var(--background)_var(--fade-stop),transparent),_linear-gradient(black,black)]",
-        "[mask-composite:exclude]",
-        "z-30",
-        "dark:bg-[linear-gradient(to_right,var(--color-dark),var(--color-dark)_50%,transparent_0,transparent)]",
-        className,
-      )}
-    ></div>
-  );
-};
+}) => (
+  <div
+    style={
+      {
+        "--background": "#ffffff",
+        "--color": "rgba(0, 0, 0, 0.2)",
+        "--height": "1px",
+        "--width": "5px",
+        "--fade-stop": "90%",
+        "--offset": offset || "200px",
+        "--color-dark": "rgba(255, 255, 255, 0.2)",
+        maskComposite: "exclude",
+      } as React.CSSProperties
+    }
+    className={cn(
+      "absolute left-[calc(var(--offset)/2*-1)] h-[var(--height)] w-[calc(100%+var(--offset))]",
+      "bg-[linear-gradient(to_right,var(--color),var(--color)_50%,transparent_0,transparent)]",
+      "[background-size:var(--width)_var(--height)]",
+      "[mask:linear-gradient(to_left,var(--background)_var(--fade-stop),transparent),_linear-gradient(to_right,var(--background)_var(--fade-stop),transparent),_linear-gradient(black,black)]",
+      "[mask-composite:exclude]",
+      "z-30",
+      "dark:bg-[linear-gradient(to_right,var(--color-dark),var(--color-dark)_50%,transparent_0,transparent)]",
+      className,
+    )}
+  />
+);
 
 const GridLineVertical = ({
   className,
@@ -142,31 +154,29 @@ const GridLineVertical = ({
 }: {
   className?: string;
   offset?: string;
-}) => {
-  return (
-    <div
-      style={
-        {
-          "--background": "#ffffff",
-          "--color": "rgba(0, 0, 0, 0.2)",
-          "--height": "5px",
-          "--width": "1px",
-          "--fade-stop": "90%",
-          "--offset": offset || "150px", //-100px if you want to keep the line inside
-          "--color-dark": "rgba(255, 255, 255, 0.2)",
-          maskComposite: "exclude",
-        } as React.CSSProperties
-      }
-      className={cn(
-        "absolute top-[calc(var(--offset)/2*-1)] h-[calc(100%+var(--offset))] w-[var(--width)]",
-        "bg-[linear-gradient(to_bottom,var(--color),var(--color)_50%,transparent_0,transparent)]",
-        "[background-size:var(--width)_var(--height)]",
-        "[mask:linear-gradient(to_top,var(--background)_var(--fade-stop),transparent),_linear-gradient(to_bottom,var(--background)_var(--fade-stop),transparent),_linear-gradient(black,black)]",
-        "[mask-composite:exclude]",
-        "z-30",
-        "dark:bg-[linear-gradient(to_bottom,var(--color-dark),var(--color-dark)_50%,transparent_0,transparent)]",
-        className,
-      )}
-    ></div>
-  );
-};
+}) => (
+  <div
+    style={
+      {
+        "--background": "#ffffff",
+        "--color": "rgba(0, 0, 0, 0.2)",
+        "--height": "5px",
+        "--width": "1px",
+        "--fade-stop": "90%",
+        "--offset": offset || "150px",
+        "--color-dark": "rgba(255, 255, 255, 0.2)",
+        maskComposite: "exclude",
+      } as React.CSSProperties
+    }
+    className={cn(
+      "absolute top-[calc(var(--offset)/2*-1)] h-[calc(100%+var(--offset))] w-[var(--width)]",
+      "bg-[linear-gradient(to_bottom,var(--color),var(--color)_50%,transparent_0,transparent)]",
+      "[background-size:var(--width)_var(--height)]",
+      "[mask:linear-gradient(to_top,var(--background)_var(--fade-stop),transparent),_linear-gradient(to_bottom,var(--background)_var(--fade-stop),transparent),_linear-gradient(black,black)]",
+      "[mask-composite:exclude]",
+      "z-30",
+      "dark:bg-[linear-gradient(to_bottom,var(--color-dark),var(--color-dark)_50%,transparent_0,transparent)]",
+      className,
+    )}
+  />
+);
